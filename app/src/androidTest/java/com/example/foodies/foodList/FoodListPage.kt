@@ -15,25 +15,42 @@ class FoodListPage(foods: List<Food>) {
     private val classTypeMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
 
-    private val foodiesIcon =
-        FoodiesIconUi(containerIdMatcher = containerIdMatcher, classTypeMatcher = classTypeMatcher)
-    private val searchButtonUi =
-        SearchButtonUi(containerIdMatcher = containerIdMatcher, classTypeMatcher = classTypeMatcher)
+    private val foodiesIcon = FoodiesIconUi(
+        id = R.id.foodiesIcon,
+        containerIdMatcher = containerIdMatcher,
+        classTypeMatcher = classTypeMatcher
+    )
+    private val searchButtonUi = SearchButtonUi(
+        id = R.id.searchButton,
+        containerIdMatcher = containerIdMatcher,
+        classTypeMatcher = classTypeMatcher
+    )
     private val foodListUi = FoodListUi(
+        id = R.id.foodList,
         list = foods,
         containerIdMatcher = containerIdMatcher,
         classTypeMatcher = classTypeMatcher
     )
-    private val cartButton =
-        CartButtonUi(containerIdMatcher = containerIdMatcher, classTypeMatcher = classTypeMatcher)
-    private val incorrectText = IncorrectTextUi(
+    private val cartButton = CartButtonUi(
+        id = R.id.cartButton,
         containerIdMatcher = containerIdMatcher,
         classTypeMatcher = classTypeMatcher
     )
-    private val progressBar =
-        ProgressUi(containerIdMatcher = containerIdMatcher, classTypeMatcher = classTypeMatcher)
-    private val retryButton =
-        RetryButtonUi(containerIdMatcher = containerIdMatcher, classTypeMatcher = classTypeMatcher)
+    private val incorrectText = IncorrectTextUi(
+        id = R.id.incorrectText,
+        containerIdMatcher = containerIdMatcher,
+        classTypeMatcher = classTypeMatcher
+    )
+    private val progressBar = ProgressUi(
+        id = R.id.progressBar,
+        containerIdMatcher = containerIdMatcher,
+        classTypeMatcher = classTypeMatcher
+    )
+    private val retryButton = RetryButtonUi(
+        id = R.id.retryButton,
+        containerIdMatcher = containerIdMatcher,
+        classTypeMatcher = classTypeMatcher
+    )
 
     fun assertLoadingState() {
         incorrectText.assertNotVisible()

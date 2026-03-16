@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.foodies.FakeFood.firstFood
 import com.example.foodies.FakeFood.foodList
 import com.example.foodies.FakeFood.searchedFood
+import com.example.foodies.detail.DetailPage
 import com.example.foodies.foodList.FoodListPage
 import org.junit.Assert.*
 import org.junit.Before
@@ -119,13 +120,19 @@ class ScenarioTest {
 
         foodListPage.clickFoodCard()
         detailPage = DetailPage(food = firstFood)
-        activityScenarioRule.doWithRecreate { detailPage.assertDetailState }
+        activityScenarioRule.doWithRecreate { detailPage.assertDetailState() }
+
+        detailPage.clickBackButton()
+
+        foodListPage.clickFoodCard()
+        activityScenarioRule.doWithRecreate { detailPage.assertDetailState() }
 
         detailPage.clickCartButton()
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
 
         cartPage.clickBackButton()
         activityScenarioRule.doWithRecreate { detailPage.assertDetailState() }
+
     }
 
     private fun ActivityScenarioRule<*>.doWithRecreate(block: () -> Unit) {
@@ -141,6 +148,10 @@ data class Food(
     val url: String,
     val description: String,
     val price: Int,
+    val energyList: EnergyInfo
+)
+
+data class EnergyInfo(
     val measure: String,
     val energyPer: String,
     val proteinsPer: String,
