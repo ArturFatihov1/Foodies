@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.foodies.FakeFood.firstFood
 import com.example.foodies.FakeFood.foodList
 import com.example.foodies.FakeFood.searchedFood
+import com.example.foodies.foodList.FoodListPage
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -43,12 +44,12 @@ class ScenarioTest {
         foodListPage.clickRetry()
         activityScenarioRule.doWithRecreate { foodListPage.assertLoadingState() }
         foodListPage.waitForLoadingList()
-        activityScenarioRule.doWithRecreate { foodListPage.assertFoodEmptyListState() } // todo think about them
+        foodListPage = FoodListPage(foods = foodList)
+        activityScenarioRule.doWithRecreate { foodListPage.assertFoodListState() }
 
-        foodListPage.refreshList()
+        foodListPage.pullToRefreshList()
         activityScenarioRule.doWithRecreate { foodListPage.assertRefreshState() }
         foodListPage.waitForLoadingList()
-        foodListPage = FoodListPage(foods = foodList)
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListState() }
     }
 
@@ -65,15 +66,15 @@ class ScenarioTest {
         foodListPage.clickAddCard(count = 1)
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
-        foodListPage.clickCartButton
+        foodListPage.clickCartButton()
         cartPage = CartPage(cartFoods = firstFood)
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
 
-        cartPage.clickDecrementCard
+        cartPage.clickDecrementCard()
         cartPage = CartPage(cartFoods = emptyList<Food>())
         activityScenarioRule.doWithRecreate { cartPage.assertCartEmptyState() }
 
-        cartPage.clickBackButton
+        cartPage.clickBackButton()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListState() }
 
         foodListPage.clickAddCard(count = 1)
@@ -82,7 +83,7 @@ class ScenarioTest {
         foodListPage.clickIncrementCard(count = 2)
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
-        foodListPage.clickCartButton
+        foodListPage.clickCartButton()
         cartPage = CartPage(cartFoods = foodList)
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
 
@@ -94,7 +95,7 @@ class ScenarioTest {
     fun get_food_search() {
         get_food_at_start()
 
-        foodListPage.clickSearchButton
+        foodListPage.clickSearchButton()
         searchPage = SearchPage(cartFoods = emptyList<Food>())
         activityScenarioRule.doWithRecreate { searchPage.assertInputEmptyState() }
 
