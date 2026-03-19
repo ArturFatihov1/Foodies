@@ -62,4 +62,12 @@ class CartPage(private val cartFoods: List<Food>) {
     fun clickBackButton() {
         backButton.click()
     }
+
+    fun clickDecrementCard() {
+        cardsUi.clickDecrementCard()
+    }
+
+    fun clickIncrementCard() {
+        cardsUi.clickIncrementCard()
+    }
 }

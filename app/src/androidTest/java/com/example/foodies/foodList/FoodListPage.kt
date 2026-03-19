@@ -7,6 +7,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.example.foodies.Food
 import com.example.foodies.R
+import com.example.foodies.foodList.foodList.CartButtonUi
+import com.example.foodies.foodList.foodList.FoodListUi
+import com.example.foodies.foodList.foodList.FoodiesIconUi
+import com.example.foodies.foodList.foodList.SearchButtonUi
+import com.example.foodies.foodList.loading.IncorrectTextUi
+import com.example.foodies.foodList.loading.ProgressUi
+import com.example.foodies.foodList.loading.RetryButtonUi
 import org.hamcrest.Matcher
 
 class FoodListPage(foods: List<Food>) {
@@ -67,7 +74,7 @@ class FoodListPage(foods: List<Food>) {
     fun assertFoodListState() {
         foodiesIcon.assertVisible()
         searchButtonUi.assertVisible()
-        foodListUi.initialStateCard()
+        foodListUi.assertInitialStateCard()
         progressBar.assertNotVisible()
         cartButton.assertNotVisible()
     }
@@ -75,7 +82,7 @@ class FoodListPage(foods: List<Food>) {
     fun assertRefreshState() {
         foodiesIcon.assertVisible()
         searchButtonUi.assertVisible()
-        foodListUi.initialStateCard()
+        foodListUi.assertInitialStateCard()
         progressBar.assertVisible()
         cartButton.assertNotVisible()
     }
@@ -104,16 +111,16 @@ class FoodListPage(foods: List<Food>) {
         foodListUi.pullToRefresh()
     }
 
-    fun clickAddCard(count: Int) {
-        foodListUi.clickAddCard(count)
+    fun clickAddCard() {
+        foodListUi.clickAddCard()
     }
 
     fun clickDecrementCard() {
         foodListUi.clickDecrementCard()
     }
 
-    fun clickIncrementCard(count: Int) {
-        foodListUi.clickIncrementCard(count)
+    fun clickIncrementCard() {
+        foodListUi.clickIncrementCard()
     }
 
     fun clickCartButton() {
@@ -124,8 +131,8 @@ class FoodListPage(foods: List<Food>) {
         searchButtonUi.click()
     }
 
-    fun clickFoodCard() {
-        foodListUi.clickFoodCard()
+    fun clickFoodCard(position: Int) {
+        foodListUi.clickFoodCard(position)
     }
 
 }

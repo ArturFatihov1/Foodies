@@ -59,17 +59,17 @@ class ScenarioTest {
     fun get_food_addToCart() {
         get_food_at_start()
 
-        foodListPage.clickAddCard(count = 1)
+        foodListPage.clickAddCard()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
         foodListPage.clickDecrementCard()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListState() }
 
-        foodListPage.clickAddCard(count = 1)
+        foodListPage.clickAddCard()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
         foodListPage.clickCartButton()
-        cartPage = CartPage(cartFoods = firstFood)
+        cartPage = CartPage(cartFoods = foodList.take(1))
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
 
         cartPage.clickDecrementCard()
@@ -79,17 +79,17 @@ class ScenarioTest {
         cartPage.clickBackButton()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListState() }
 
-        foodListPage.clickAddCard(count = 1)
+        foodListPage.clickAddCard()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
-        foodListPage.clickIncrementCard(count = 2)
+        foodListPage.clickIncrementCard()
         activityScenarioRule.doWithRecreate { foodListPage.assertFoodListCartState() }
 
         foodListPage.clickCartButton()
         cartPage = CartPage(cartFoods = foodList)
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
 
-        cartPage.clickIncrementCard(count = 3)
+        cartPage.clickIncrementCard()
         activityScenarioRule.doWithRecreate { cartPage.assertCartSufficientState() }
     }
 
@@ -119,13 +119,13 @@ class ScenarioTest {
     fun check_detail() {
         get_food_at_start()
 
-        foodListPage.clickFoodCard()
+        foodListPage.clickFoodCard(1)
         detailPage = DetailPage(food = firstFood)
         activityScenarioRule.doWithRecreate { detailPage.assertDetailState() }
 
         detailPage.clickBackButton()
 
-        foodListPage.clickFoodCard()
+        foodListPage.clickFoodCard(1)
         activityScenarioRule.doWithRecreate { detailPage.assertDetailState() }
 
         detailPage.clickCartButton()
