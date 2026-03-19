@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.example.foodies.Food
 import com.example.foodies.R
+import com.example.foodies.foodList.foodList.CartButtonUi
 import org.hamcrest.Matcher
 
 class DetailPage(food: Food) {
@@ -22,8 +23,8 @@ class DetailPage(food: Food) {
     )
     private val imageFood = ImageFoodUi(
         id = R.id.imageFood,
-        url = "https:"
-                containerIdMatcher = containerIdMatcher,
+        url = "https:",
+        containerIdMatcher = containerIdMatcher,
         classTypeMatcher = classTypeMatcher
     )
     private val titleUi = TitleUi(
