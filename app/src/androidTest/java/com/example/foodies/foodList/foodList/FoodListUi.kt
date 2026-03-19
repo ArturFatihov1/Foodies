@@ -48,13 +48,13 @@ class FoodListUi(
 
     fun assertInitialStateCard() {
         initialButtonCard.assertVisible()
-        initialButtonCard.assertNotVisible()
+        incrementButtonCard.assertNotVisible()
         decrementButtonCard.assertNotVisible()
     }
 
     fun assertAddCartState() {
         initialButtonCard.assertNotVisible()
-        initialButtonCard.assertVisible()
+        incrementButtonCard.assertVisible()
         decrementButtonCard.assertVisible()
     }
 

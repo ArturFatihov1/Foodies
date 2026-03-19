@@ -7,6 +7,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.example.foodies.Food
 import com.example.foodies.R
+import com.example.foodies.detail.BackButtonUi
+import com.example.foodies.foodList.foodList.CartButtonUi
+import com.example.foodies.foodList.foodList.card.CardFoodUi
 import org.hamcrest.Matcher
 
 class CartPage(private val cartFoods: List<Food>) {
@@ -47,15 +50,15 @@ class CartPage(private val cartFoods: List<Food>) {
     fun assertCartSufficientState() {
         backButton.assertVisible()
         textEmpty.assertNotVisible()
-        cardsUi.assertVisible()
-        cardsUi.assertIncrementDecrementButton()
+        cardsUi.forEach { it.assertVisible() }
+        cardsUi.forEach { it.assertIncrementDecrementButton() }
         cartButton.assertVisible()
     }
 
     fun assertCartEmptyState() {
         backButton.assertVisible()
         textEmpty.assertVisible()
-        cardsUi.assertNotVisible()
+        cardsUi.forEach { it.assertNotVisible() }
         cartButton.assertNotVisible()
     }
 
@@ -64,10 +67,10 @@ class CartPage(private val cartFoods: List<Food>) {
     }
 
     fun clickDecrementCard() {
-        cardsUi.clickDecrementCard()
+        cardsUi[0].clickDecrementCard()
     }
 
     fun clickIncrementCard() {
-        cardsUi.clickIncrementCard()
+        cardsUi[0].clickIncrementCard()
     }
 }
