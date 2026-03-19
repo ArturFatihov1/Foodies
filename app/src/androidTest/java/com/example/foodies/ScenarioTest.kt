@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.foodies.FakeFood.firstFood
 import com.example.foodies.FakeFood.foodList
 import com.example.foodies.FakeFood.searchedFood
+import com.example.foodies.cart.CartPage
 import com.example.foodies.detail.DetailPage
 import com.example.foodies.foodList.FoodListPage
 import org.junit.Assert.*
