@@ -1,2 +1,2 @@
 Project name: Foodies app
-Stack: Kotlin, XML, Retrofit, Room, Livedata, koin, clean Architecture, OOP
+Stack: Kotlin, Jetpack Compose, Retrofit, Room, Coroutine Flow, koin, clean Architecture, OOP
