@@ -1,30 +1,22 @@
-package com.example.foodies
+package com.example.foodies.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.foodies.theme.FoodiesTheme
+import com.example.foodies.presentation.feature.ProductsScreen
+import com.example.foodies.presentation.theme.FoodiesTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val viewModel: ProductViewModel by viewModel()
         setContent {
             FoodiesTheme {
-
-                Greading()
+                ProductsScreen(viewModel)
             }
         }
     }
-}
-
-@Composable
-fun Greading() {
-    Text(modifier = Modifier.padding(40.dp), text = "HELLO WORLD")
 }
