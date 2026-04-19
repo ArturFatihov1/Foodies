@@ -13,4 +13,13 @@ class ProductsRepositoryImpl(private val cloudRepository: CloudRepository) : Pro
         val data = cloudRepository.getProductById(id)
         return data.toProduct()
     }
+
+    override suspend fun getNameCategories(): List<String> {
+        return cloudRepository.getNameCategories()
+    }
+
+    override suspend fun getProductsCategory(category: String): List<Product> {
+        val data = cloudRepository.getProductsCategory(category)
+        return data.products.toProductList()
+    }
 }
