@@ -28,18 +28,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.foodies.presentation.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ErrorAlert(
     message: String,
-    viewModel: ProductViewModel,
-    productId: Long,
-    onBackClick: () -> Unit
+    onRetryClick: () -> Unit,
+    onDismissClick: (() -> Unit)? = null
 ) {
     BasicAlertDialog(
-        onDismissRequest = {}
+        onDismissRequest = { onDismissClick?.invoke() }
     ) {
         Surface(
             shape = RoundedCornerShape(28.dp),
@@ -81,14 +79,16 @@ fun ErrorAlert(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = onBackClick) {
-                        Text("Назад", color = Color.Gray)
+                    if (onDismissClick != null) {
+                        TextButton(onClick = onDismissClick) {
+                            Text("Назад", color = Color.Gray)
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = { viewModel.loadDetail(productId) },
+                        onClick = onRetryClick,
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF15412)),
-                        shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Text("Повторить")
                     }
