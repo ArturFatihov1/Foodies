@@ -12,20 +12,19 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.foodies.presentation.ProductViewModel
 import com.example.foodies.presentation.theme.ChipRed700
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryTabs() {
-    var selectedIndex by remember { mutableIntStateOf(0) }
-    val categories = listOf("Роллы", "Суши", "Наборы", "Горячие блюда", "Закуски")
+fun CategoryTabs(viewModel: ProductViewModel) {
+    val categories by viewModel.categoriesState.collectAsState()
+    val selectedCategory by viewModel.selectedCategories.collectAsState()
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,11 +33,13 @@ fun CategoryTabs() {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         itemsIndexed(categories) { index, category ->
-            val isSelected = selectedIndex == index
+            val isSelected = selectedCategory == category
 
             FilterChip(
                 selected = isSelected,
-                onClick = { selectedIndex = index },
+                onClick = {
+                    viewModel.selectCategory(category)
+                },
                 label = {
                     Text(
                         text = category,

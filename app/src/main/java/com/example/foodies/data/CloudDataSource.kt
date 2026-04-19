@@ -9,4 +9,10 @@ interface CloudRepository {
 
     @GET("products/{id}")
     suspend fun getProductById(@Path("id") id: Long): ProductDto
+
+    @GET("products/category-list")
+    suspend fun getNameCategories(): List<String>
+
+    @GET("products/category/{nameCategory}")
+    suspend fun getProductsCategory(@Path("nameCategory") category: String): ProductResponse
 }
