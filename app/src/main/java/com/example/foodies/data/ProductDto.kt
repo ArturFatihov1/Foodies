@@ -1,5 +1,6 @@
 package com.example.foodies.data
 
+import com.example.foodies.domain.entities.Parameters
 import com.example.foodies.domain.entities.Product
 import com.google.gson.annotations.SerializedName
 
@@ -16,6 +17,8 @@ data class ProductDto(
     val discountPrice: Double,
     @SerializedName("description")
     val description: String,
+    @SerializedName("dimensions")
+    val dimensions: Parameters,
     @SerializedName("images")
     val images: List<String>
 )
@@ -28,6 +31,7 @@ fun ProductDto.toProduct(): Product {
         price = this.price,
         discountPrice = this.discountPrice,
         description = this.description,
+        dimensions = this.dimensions,
         images = this.images
     )
 }

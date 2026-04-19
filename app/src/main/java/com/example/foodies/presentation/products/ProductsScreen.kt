@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.feature
+package com.example.foodies.presentation.products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.foodies.R
+import com.example.foodies.domain.entities.Product
 import com.example.foodies.presentation.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductsScreen(viewModel: ProductViewModel) {
+fun ProductsScreen(
+    viewModel: ProductViewModel,
+    onCardClick: (Product) -> Unit
+) {
     val state by viewModel.state.collectAsState()
 
     Scaffold { paddingValues ->
@@ -81,7 +85,7 @@ fun ProductsScreen(viewModel: ProductViewModel) {
                 items(state.products) { product ->
                     ProductCard(
                         product = product,
-                        onCardClick = { },
+                        onCardClick = { onCardClick(product) },
                         onBuyClick = { }
                     )
                 }
