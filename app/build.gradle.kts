@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.coil.compose)
 
+    implementation(libs.androidx.navigation.compose)
+
 
     implementation(platform(libs.koin.bom))
 
@@ -62,6 +64,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.play.services.analytics.impl)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
