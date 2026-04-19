@@ -8,4 +8,9 @@ class ProductsRepositoryImpl(private val cloudRepository: CloudRepository) : Pro
         val data = cloudRepository.getProducts()
         return data.products.toProductList()
     }
+
+    override suspend fun getProductById(id: Long): Product {
+        val data = cloudRepository.getProductById(id)
+        return data.toProduct()
+    }
 }

@@ -7,5 +7,12 @@ data class Product(
     val price: Double?,
     val discountPrice: Double,
     val description: String,
+    val dimensions: Parameters,
     val images: List<String>
+)
+
+data class Parameters(
+    val width: Double,
+    val height: Double,
+    val depth: Double
 )
