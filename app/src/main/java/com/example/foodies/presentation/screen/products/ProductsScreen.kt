@@ -1,16 +1,16 @@
-package com.example.foodies.presentation.products
+package com.example.foodies.presentation.screen.products
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.foodies.domain.entities.Product
-import com.example.foodies.presentation.ProductViewModel
-import com.example.foodies.presentation.core.ErrorAlert
-import com.example.foodies.presentation.core.ProgressIndicator
+import com.example.foodies.presentation.components.ErrorAlert
+import com.example.foodies.presentation.components.ProgressIndicator
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProductsScreen(
-    viewModel: ProductViewModel,
+    viewModel: ProductViewModel = koinViewModel(),
     onCardClick: (Product) -> Unit
 ) {
     val uiState by viewModel.productState.collectAsState()
@@ -28,5 +28,8 @@ fun ProductsScreen(
             state = state,
             onCardClick = onCardClick
         )
+        else -> {
+            ProductState.Idle
+        }
     }
 }

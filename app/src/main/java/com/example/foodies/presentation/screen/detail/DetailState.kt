@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.detail
+package com.example.foodies.presentation.screen.detail
 
 import com.example.foodies.domain.entities.Product
 

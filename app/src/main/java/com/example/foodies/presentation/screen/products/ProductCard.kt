@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.products
+package com.example.foodies.presentation.screen.products
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
