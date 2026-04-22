@@ -1,17 +1,18 @@
-package com.example.foodies.presentation.detail
+package com.example.foodies.presentation.screen.detail
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.example.foodies.presentation.ProductViewModel
-import com.example.foodies.presentation.core.ErrorAlert
-import com.example.foodies.presentation.core.ProgressIndicator
+import com.example.foodies.presentation.components.ErrorAlert
+import com.example.foodies.presentation.components.ProgressIndicator
+import com.example.foodies.presentation.screen.products.ProductViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailScreen(
     productId: Long,
-    viewModel: ProductViewModel,
+    viewModel: ProductViewModel = koinViewModel(),
     onBackClick: () -> Unit,
 ) {
 

@@ -1,4 +1,4 @@
-package com.example.foodies.presentation
+package com.example.foodies.presentation.screen.products
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,19 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodies.domain.GetAllProductsUseCase
 import com.example.foodies.domain.GetCategoriesProductUseCase
 import com.example.foodies.domain.GetDetailProductUseCase
-import com.example.foodies.domain.ProductsRepository
-import com.example.foodies.presentation.detail.DetailState
-import com.example.foodies.presentation.products.ProductState
+import com.example.foodies.presentation.screen.detail.DetailState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ProductViewModel(repository: ProductsRepository) : ViewModel() {
-
-    private val getAllProductsUseCase = GetAllProductsUseCase(repository)
-    private val getDetailProductUseCase = GetDetailProductUseCase(repository)
-    private val getCategoriesProductUseCase = GetCategoriesProductUseCase(repository)
+class ProductViewModel(
+    private val getAllProductsUseCase: GetAllProductsUseCase,
+    private val getDetailProductUseCase: GetDetailProductUseCase,
+    private val getCategoriesProductUseCase: GetCategoriesProductUseCase,
+) : ViewModel() {
 
     private val _productState = MutableStateFlow<ProductState>(ProductState.Loading)
     val productState = _productState.asStateFlow()
@@ -55,6 +53,7 @@ class ProductViewModel(repository: ProductsRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val product = getDetailProductUseCase.getProductById(id)
+                delay(1500)
                 _detailState.value = DetailState.Success(product)
             } catch (e: Exception) {
                 _detailState.value = DetailState.Error(message = e.toString())

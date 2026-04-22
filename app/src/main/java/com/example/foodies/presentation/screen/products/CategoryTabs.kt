@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.products
+package com.example.foodies.presentation.screen.products
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.foodies.presentation.ProductViewModel
 import com.example.foodies.presentation.theme.ChipRed700
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.detail
+package com.example.foodies.presentation.screen.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,13 +47,13 @@ fun DetailContent(
     Scaffold(
         bottomBar = {
             Surface(
-                color = Color.Companion.White,
+                color = Color.White,
                 tonalElevation = 8.dp,
-                modifier = Modifier.Companion.windowInsetsPadding(WindowInsets.Companion.navigationBars)
+                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
             ) {
                 Button(
                     onClick = { /* TODO */ },
-                    modifier = Modifier.Companion
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .height(48.dp),
@@ -63,14 +63,14 @@ fun DetailContent(
                     Text(
                         text = "В корзину за ${product.discountPrice} ₽",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Companion.White
+                        color = Color.White
                     )
                 }
             }
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
@@ -79,53 +79,51 @@ fun DetailContent(
                 AsyncImage(
                     model = product.images.firstOrNull(),
                     contentDescription = null,
-                    modifier = Modifier.Companion
+                    modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1.2f),
-                    contentScale = ContentScale.Companion.Crop
+                    contentScale = ContentScale.Crop
                 )
                 IconButton(
                     onClick = onBackClick,
-                    modifier = Modifier.Companion
+                    modifier = Modifier
                         .padding(16.dp)
                         .shadow(2.dp, CircleShape)
-                        .background(Color.Companion.White, CircleShape)
+                        .background(Color.White, CircleShape)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = null,
-                        tint = Color.Companion.Black
+                        tint = Color.Black
                     )
                 }
             }
 
-            Column(modifier = Modifier.Companion.padding(16.dp)) {
+            Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = product.title,
                     style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Companion.Bold
+                    fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.Companion.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = product.description,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Companion.Gray
+                    color = Color.Gray
                 )
 
-                Spacer(modifier = Modifier.Companion.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-
-                // Таблица характеристик
                 DetailRow("Вес", "${product.weight} г")
-                Text(text = "Размеры", fontWeight = FontWeight.Companion.Bold)
+                Text(text = "Размеры", fontWeight = FontWeight.Bold)
 
-                HorizontalDivider(color = Color.Companion.LightGray.copy(alpha = 0.5f))
+                HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
                 DetailRow("Ширина", product.dimensions.width.toString())
-                HorizontalDivider(color = Color.Companion.LightGray.copy(alpha = 0.5f))
+                HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
                 DetailRow("Высота", product.dimensions.height.toString())
-                HorizontalDivider(color = Color.Companion.LightGray.copy(alpha = 0.5f))
+                HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
                 DetailRow("Глубина", product.dimensions.depth.toString())
             }
         }

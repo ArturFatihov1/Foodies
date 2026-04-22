@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.products
+package com.example.foodies.presentation.screen.products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.foodies.R
 import com.example.foodies.domain.entities.Product
-import com.example.foodies.presentation.ProductViewModel
 
 @Composable
 fun ProductContent(
