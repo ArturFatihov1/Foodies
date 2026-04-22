@@ -6,13 +6,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.foodies.presentation.components.ErrorAlert
 import com.example.foodies.presentation.components.ProgressIndicator
-import com.example.foodies.presentation.screen.products.ProductViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailScreen(
     productId: Long,
-    viewModel: ProductViewModel = koinViewModel(),
+    viewModel: DetailViewModel = koinViewModel(),
     onBackClick: () -> Unit,
 ) {
 

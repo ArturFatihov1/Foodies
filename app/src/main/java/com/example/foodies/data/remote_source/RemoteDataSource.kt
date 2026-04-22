@@ -1,9 +1,10 @@
-package com.example.foodies.data
+package com.example.foodies.data.remote_source
 
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
-interface CloudRepository {
+interface RemoteDataSource {
     @GET("products")
     suspend fun getProducts(): ProductResponse
 
@@ -15,4 +16,8 @@ interface CloudRepository {
 
     @GET("products/category/{nameCategory}")
     suspend fun getProductsCategory(@Path("nameCategory") category: String): ProductResponse
+
+    @GET("products/search")
+    suspend fun searchProduct(@Query("q") query: String): ProductResponse
+
 }

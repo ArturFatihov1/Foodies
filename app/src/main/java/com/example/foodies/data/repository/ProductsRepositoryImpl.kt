@@ -1,9 +1,12 @@
-package com.example.foodies.data
+package com.example.foodies.data.repository
 
+import com.example.foodies.data.remote_source.RemoteDataSource
+import com.example.foodies.data.remote_source.toProduct
+import com.example.foodies.data.remote_source.toProductList
 import com.example.foodies.domain.ProductsRepository
 import com.example.foodies.domain.entities.Product
 
-class ProductsRepositoryImpl(private val cloudRepository: CloudRepository) : ProductsRepository {
+class ProductsRepositoryImpl(private val cloudRepository: RemoteDataSource) : ProductsRepository {
     override suspend fun getAllProducts(): List<Product> {
         val data = cloudRepository.getProducts()
         return data.products.toProductList()
@@ -22,4 +25,10 @@ class ProductsRepositoryImpl(private val cloudRepository: CloudRepository) : Pro
         val data = cloudRepository.getProductsCategory(category)
         return data.products.toProductList()
     }
+
+    override suspend fun searchProduct(query: String): List<Product> {
+        val data = cloudRepository.searchProduct(query)
+        return data.products.toProductList()
+    }
+
 }

@@ -11,7 +11,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ProductsScreen(
     viewModel: ProductViewModel = koinViewModel(),
-    onCardClick: (Product) -> Unit
+    onCardClick: (Product) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     val uiState by viewModel.productState.collectAsState()
 
@@ -26,7 +27,8 @@ fun ProductsScreen(
         is ProductState.Success -> ProductContent(
             viewModel,
             state = state,
-            onCardClick = onCardClick
+            onCardClick = onCardClick,
+            onSearchClick = onSearchClick
         )
         else -> {
             ProductState.Idle
