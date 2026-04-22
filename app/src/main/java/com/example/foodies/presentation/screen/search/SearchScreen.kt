@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -75,6 +77,17 @@ fun SearchScreen(
                         modifier = Modifier.weight(1f),
                         placeholder = {
                             Text(text = "Найти блюдо", color = Color.Gray)
+                        },
+                        trailingIcon = {
+                            if (query.isNotEmpty()) {
+                                IconButton(onClick = { viewModel.onQueryChanged("") }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Закрыть",
+                                        tint = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
+                            }
                         },
                         colors = TextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
