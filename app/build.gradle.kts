@@ -73,6 +73,7 @@ dependencies {
     /** Retrofit **/
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
     /** Room **/
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
