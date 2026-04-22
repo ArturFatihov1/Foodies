@@ -30,7 +30,8 @@ import com.example.foodies.domain.entities.Product
 fun ProductContent(
     viewModel: ProductViewModel,
     state: ProductState.Success,
-    onCardClick: (Product) -> Unit
+    onCardClick: (Product) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Column(
@@ -58,7 +59,7 @@ fun ProductContent(
                     contentDescription = "Foodies Logo",
                 )
 
-                IconButton(onClick = { }) {
+                IconButton(onClick = onSearchClick) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = null,
@@ -68,22 +69,34 @@ fun ProductContent(
             }
 
             CategoryTabs(viewModel)
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ProductGrid(
+                state = state.products,
+                onCardClick = onCardClick,
                 modifier = Modifier.weight(1f)
-            ) {
-                items(state.products) { product ->
-                    ProductCard(
-                        product = product,
-                        onCardClick = { onCardClick(product) },
-                        onBuyClick = { }
-                    )
-                }
-            }
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductGrid(
+    state: List<Product>,
+    onCardClick: (Product) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+    ) {
+        items(state) { product ->
+            ProductCard(
+                product = product,
+                onCardClick = { onCardClick(product) },
+                onBuyClick = { }
+            )
         }
     }
 }

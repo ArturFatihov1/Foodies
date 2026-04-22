@@ -7,8 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.foodies.presentation.screen.Detail
 import com.example.foodies.presentation.screen.ProductList
+import com.example.foodies.presentation.screen.Search
 import com.example.foodies.presentation.screen.detail.DetailScreen
 import com.example.foodies.presentation.screen.products.ProductsScreen
+import com.example.foodies.presentation.screen.search.SearchScreen
 
 @Composable()
 fun MainScreen() {
@@ -22,6 +24,9 @@ fun MainScreen() {
             ProductsScreen(
                 onCardClick = { product ->
                     navController.navigate(Detail(productId = product.id))
+                },
+                onSearchClick = {
+                    navController.navigate(Search)
                 }
             )
         }
@@ -32,6 +37,16 @@ fun MainScreen() {
                 onBackClick = { navController.navigateUp() }
             )
         }
+
+        composable<Search> {
+            SearchScreen(
+                onBackClick = { navController.navigateUp() },
+                onCardClick = { product ->
+                    navController.navigate(Detail(productId = product.id))
+                },
+            )
+        }
+
     }
 
 }
