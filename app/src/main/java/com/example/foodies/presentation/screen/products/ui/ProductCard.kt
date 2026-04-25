@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.screen.products
+package com.example.foodies.presentation.screen.products.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,19 +26,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.foodies.domain.entities.Product
+import com.example.foodies.presentation.screen.products.ProductsIntent
 import com.example.foodies.presentation.theme.CardGray100
 
 @Composable
 fun ProductCard(
     product: Product,
-    onCardClick: () -> Unit,
-    onBuyClick: () -> Unit
+    onIntent: (ProductsIntent) -> Unit,
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = CardGray100),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier.fillMaxWidth(),
-        onClick = onCardClick
+        onClick = { onIntent(ProductsIntent.OnProductClick(product.id)) }
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             AsyncImage(
@@ -66,7 +66,7 @@ fun ProductCard(
             Spacer(modifier = Modifier.height(12.dp))
 
             Button(
-                onClick = { onBuyClick },
+                onClick = { },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
