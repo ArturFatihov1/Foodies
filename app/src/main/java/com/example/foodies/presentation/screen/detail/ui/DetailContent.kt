@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.screen.detail
+package com.example.foodies.presentation.screen.detail.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +38,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.foodies.domain.entities.Product
+import com.example.foodies.presentation.screen.detail.DetailIntent
 
 @Composable
 fun DetailContent(
     product: Product,
-    onBackClick: () -> Unit
+    onIntent: (DetailIntent) -> Unit,
 ) {
     Scaffold(
         bottomBar = {
@@ -85,7 +86,7 @@ fun DetailContent(
                     contentScale = ContentScale.Crop
                 )
                 IconButton(
-                    onClick = onBackClick,
+                    onClick = { onIntent(DetailIntent.OnBackClick) },
                     modifier = Modifier
                         .padding(16.dp)
                         .shadow(2.dp, CircleShape)

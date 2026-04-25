@@ -1,72 +1,125 @@
 package com.example.foodies.presentation.screen.products
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodies.domain.GetAllProductsUseCase
 import com.example.foodies.domain.GetCategoriesProductUseCase
+import com.example.foodies.domain.SearchProductUseCase
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val getCategoriesProductUseCase: GetCategoriesProductUseCase,
-) : ViewModel() {
-
-    private val _productState = MutableStateFlow<ProductState>(ProductState.Loading)
-    val productState = _productState.asStateFlow()
-
-    private val _categoriesState = MutableStateFlow<List<String>>(emptyList())
-    val categoriesState = _categoriesState.asStateFlow()
-
-    private val _selectedCategories = MutableStateFlow<String>("")
-    val selectedCategories = _selectedCategories.asStateFlow()
-
+    private val searchProductUseCase: SearchProductUseCase,
+) : BaseViewModel<ProductsState, ProductsIntent, ProductsLabel>(
+    ProductsState()
+) {
     init {
         load()
         loadNameCategory()
+        observeSearchQuery()
     }
 
-    fun load() {
-        _productState.value = ProductState.Loading
+    override fun onIntent(intent: ProductsIntent) {
+        when (intent) {
+            ProductsIntent.LoadProducts -> load()
+            is ProductsIntent.OnProductClick -> navigateToDetail(intent)
+            is ProductsIntent.SelectedCategory -> loadCategoryProducts(intent.category)
+            is ProductsIntent.ChangeHeader -> changeHeader(intent.choice)
+            is ProductsIntent.OnQueryChanged -> onQueryChanged(intent.query)
+        }
+    }
+
+    private fun changeHeader(choice: Boolean) {
+        _state.update { it.copy(header = choice) }
+    }
+
+    private fun load() {
         viewModelScope.launch {
+            _state.update { it.copy(loading = true) }
             try {
                 delay(2000)
                 val data = getAllProductsUseCase.getAllProducts()
-                _productState.value = ProductState.Success(products = data)
+                _state.update { it.copy(loading = false, products = data) }
             } catch (e: Exception) {
-                _productState.value = ProductState.Error(message = e.toString())
+                _state.update { it.copy(loading = false, showError = true, error = e.toString()) }
             }
         }
     }
 
-    fun loadNameCategory() {
+    private fun navigateToDetail(intent: ProductsIntent.OnProductClick) {
+        viewModelScope.launch {
+            postLabel(label = ProductsLabel.NavigateToDetail(intent.id))
+        }
+    }
+
+    private fun loadNameCategory() {
         viewModelScope.launch {
             try {
                 val data = getCategoriesProductUseCase.getNameCategories()
-                _categoriesState.value = data
+                _state.update { it.copy(categories = data) }
             } catch (e: Exception) {
-                Log.d("Login123", "Category not FOUND")
+                _state.update { it.copy(showError = true, error = e.toString()) }
             }
         }
     }
 
-    fun loadCategoryProducts(category: String) {
-        _productState.value = ProductState.Loading
+    private fun loadCategoryProducts(category: String) {
         viewModelScope.launch {
+            _state.update { it.copy(loading = true, selectedCategory = category) }
             try {
                 val data = getCategoriesProductUseCase.getProductCategories(category)
-                _productState.value = ProductState.Success(products = data)
+                _state.update { it.copy(loading = false, products = data) }
             } catch (e: Exception) {
-                _productState.value = ProductState.Error(message = e.toString())
+                _state.update { it.copy(loading = false, showError = true, error = e.toString()) }
             }
         }
     }
 
-    fun selectCategory(category: String) {
-        _selectedCategories.value = category
-        loadCategoryProducts(category)
+    private fun onQueryChanged(newQuery: String) {
+        _state.update { it.copy(query = newQuery) }
+    }
+
+    private fun searchProduct(query: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(loading = true) }
+            try {
+                val data = searchProductUseCase.searchProduct(query)
+                if (data.isEmpty())
+                    _state.update {
+                        it.copy(
+                            products = emptyList(),
+                            loading = false,
+                            error = "Ничего не найдено"
+                        )
+                    }
+                else
+                    _state.update { it.copy(loading = false, products = data) }
+            } catch (e: Exception) {
+                _state.update { it.copy(loading = false, error = e.toString()) }
+            }
+        }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearchQuery() {
+        viewModelScope.launch {
+            state
+                .map { it.query }
+                .distinctUntilChanged()
+                .debounce(500)
+                .collect { query ->
+                    if (query.isBlank()) {
+                        load()
+                    } else {
+                        searchProduct(query)
+                    }
+                }
+        }
     }
 }

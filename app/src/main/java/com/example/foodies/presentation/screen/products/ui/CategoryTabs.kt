@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.screen.products
+package com.example.foodies.presentation.screen.products.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,18 +12,19 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.foodies.presentation.screen.products.ProductsIntent
+import com.example.foodies.presentation.screen.products.ProductsState
 import com.example.foodies.presentation.theme.ChipRed700
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryTabs(viewModel: ProductViewModel) {
-    val categories by viewModel.categoriesState.collectAsState()
-    val selectedCategory by viewModel.selectedCategories.collectAsState()
+fun CategoryTabs(
+    state: ProductsState,
+    onIntent: (ProductsIntent) -> Unit
+) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,14 +32,12 @@ fun CategoryTabs(viewModel: ProductViewModel) {
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(categories) { index, category ->
-            val isSelected = selectedCategory == category
+        itemsIndexed(state.categories) { index, category ->
+            val isSelected = state.selectedCategory == category
 
             FilterChip(
                 selected = isSelected,
-                onClick = {
-                    viewModel.selectCategory(category)
-                },
+                onClick = { onIntent(ProductsIntent.SelectedCategory(category)) },
                 label = {
                     Text(
                         text = category,

@@ -1,30 +1,47 @@
 package com.example.foodies.presentation.screen.detail
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodies.domain.GetDetailProductUseCase
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.foodies.presentation.screen.products.BaseViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val getDetailProductUseCase: GetDetailProductUseCase,
-) : ViewModel() {
+) : BaseViewModel<DetailState, DetailIntent, DetailLabel>(
+    DetailState()
+) {
 
-    private val _detailState = MutableStateFlow<DetailState>(DetailState.Loading)
-    val detailState = _detailState.asStateFlow()
+    override fun onIntent(intent: DetailIntent) {
+        when (intent) {
+            is DetailIntent.LoadProduct -> loadDetail(intent.id)
+            DetailIntent.OnBackClick -> navigateToBack()
+        }
+    }
 
-    fun loadDetail(id: Long) {
-        _detailState.value = DetailState.Loading
+    private fun loadDetail(id: Long) {
         viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    product = null,
+                    isLoading = true,
+                    messageError = null
+                )
+            }
             try {
                 val product = getDetailProductUseCase.getProductById(id)
-                delay(1500)
-                _detailState.value = DetailState.Success(product)
+                _state.update { it.copy(isLoading = false, product = product) }
             } catch (e: Exception) {
-                _detailState.value = DetailState.Error(message = e.toString())
+                _state.update {
+                    it.copy(isLoading = false, messageError = e.toString())
+                }
             }
+        }
+    }
+
+    private fun navigateToBack() {
+        viewModelScope.launch {
+            postLabel(DetailLabel.NavigateToBack)
         }
     }
 }
