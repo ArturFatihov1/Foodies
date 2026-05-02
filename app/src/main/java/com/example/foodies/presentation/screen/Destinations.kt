@@ -8,4 +8,6 @@ object ProductList
 @Serializable
 data class Detail(val productId: Long)
 
+@Serializable
+object Cart
 

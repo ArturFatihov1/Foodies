@@ -2,7 +2,7 @@ package com.example.foodies.presentation.screen.detail
 
 import androidx.lifecycle.viewModelScope
 import com.example.foodies.domain.GetDetailProductUseCase
-import com.example.foodies.presentation.screen.products.BaseViewModel
+import com.example.foodies.presentation.core.BaseViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
