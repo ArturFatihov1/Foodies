@@ -1,4 +1,4 @@
-package com.example.foodies.presentation.screen.products
+package com.example.foodies.presentation.core
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.channels.Channel
