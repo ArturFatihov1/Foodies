@@ -8,7 +8,8 @@ data class Product(
     val discountPrice: Double,
     val description: String,
     val dimensions: Parameters,
-    val images: List<String>
+    val images: List<String>,
+    val count: Int = 0
 )
 
 data class Parameters(
