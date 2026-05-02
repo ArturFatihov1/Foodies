@@ -10,5 +10,6 @@ data class ProductsState(
     val selectedCategory: String = "",
     val showError: Boolean = false,
     val error: String? = null,
-    val header: Boolean = false
+    val header: Boolean = false,
+    val totalSum: Double = 0.0,
 )

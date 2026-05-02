@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.foodies.R
 import com.example.foodies.domain.entities.Product
+import com.example.foodies.presentation.components.BottomButtonCart
 import com.example.foodies.presentation.screen.products.ProductsIntent
 import com.example.foodies.presentation.screen.products.ProductsState
 
@@ -36,7 +37,15 @@ fun ProductContent(
     state: ProductsState,
     onIntent: (ProductsIntent) -> Unit,
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        bottomBar = {
+            if (state.totalSum != 0.0) {
+                BottomButtonCart(
+                    state.totalSum,
+                    onButtonClick = { onIntent(ProductsIntent.NavigateToCart) })
+            }
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
